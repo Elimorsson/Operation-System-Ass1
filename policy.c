@@ -5,9 +5,10 @@
 int
 main(int argc, char *argv[])
 {
-  int i;
-
-  for(i = 1; i < argc; i++)
-    printf(1, "%s%s", argv[i], i+1 < argc ? " " : "\n");
+if (argc != 2){
+    exit(1);
+ }
+  int n = atoi(argv[1]);
+  policy(n);
   exit(0);
 }

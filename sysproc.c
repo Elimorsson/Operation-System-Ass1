@@ -16,14 +16,52 @@ sys_fork(void)
 int
 sys_exit(void)
 {
-  exit();
+  int status;
+  if(argint(0, &status) < 0)
+    return -1;
+  exit(status);
   return 0;  // not reached
 }
 
 int
 sys_wait(void)
 {
-  return wait();
+  int statusPTR;
+  if(argint(0, &statusPTR) < 0)
+    return -1;
+  return wait((int*) statusPTR);
+}
+
+int
+sys_set_ps_priority(void){
+  int newPriority;
+  if(argint(0, &newPriority) < 0)
+    return -1;
+  return set_ps_priority(newPriority);
+}
+
+int 
+sys_set_cfs_priority(void){
+  int factor;
+  if(argint(0, &factor) < 0)
+    return -1;
+  return set_cfs_priority(factor);
+}
+
+int sys_policy(void){
+  int pType;
+  if (argint(0, &pType) < 0){
+    return -1;
+  }
+  return policy(pType);
+  }  
+
+int 
+sys_proc_info(void){
+  char* performance;
+  if (argptr(0, &performance,sizeof(struct perf)) < 0)
+    return -1;
+  return proc_info((struct perf*) performance);
 }
 
 int
@@ -40,6 +78,12 @@ int
 sys_getpid(void)
 {
   return myproc()->pid;
+}
+
+int
+sys_memsize(void)
+{
+  return myproc()->sz;
 }
 
 int

@@ -34,6 +34,8 @@ struct context {
 
 enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+
+
 // Per-process state
 struct proc {
   uint sz;                     // Size of process memory (bytes)
@@ -49,7 +51,22 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  int status;                  // Status of the process after terminated
+  long long accumulator;       // define the priority of the process
+  int cfs_priority;            // field for set priority at Completely Fair Schedular 
+  struct perf *perf;           // save performance date
+  int ps_priority;              // field for set priority
+  int rtime;                    // time process was in running state
+  int stime;                    // time process was in sleeping state
+  int retime;                   // time process was in ready/runnable state
+
 };
+
+
+void updatePerf();
+int policy(int pType);
+int set_cfs_priority(int factor);
+int set_ps_priority(int newPriority);
 
 // Process memory is laid out contiguously, low addresses first:
 //   text
