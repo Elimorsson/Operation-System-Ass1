@@ -73,6 +73,9 @@ index 0000000..af3a1f6
 +    "version": "2.0.0"
 +}
 \ No newline at end of file
+diff --git a/301123436_301727657.patch b/301123436_301727657.patch
+new file mode 100644
+index 0000000..e69de29
 diff --git a/Makefile b/Makefile
 index 09d790c..fca58ab 100644
 --- a/Makefile
@@ -558,7 +561,7 @@ index 0000000..77ad275
 +  exit(0);
 +}
 diff --git a/proc.c b/proc.c
-index 806b1b1..e572718 100644
+index 806b1b1..2789218 100644
 --- a/proc.c
 +++ b/proc.c
 @@ -65,6 +65,23 @@ myproc(void) {
@@ -700,13 +703,13 @@ index 806b1b1..e572718 100644
 +struct proc* calculateRatio(struct proc* highP, struct proc* p1){
 +float highPRatio,p1Ratio;
 +
-+int highPDen = (2 * highP->rtime) + highP->stime;
++int highPDen = highP->retime + highP->rtime + highP->stime;
 +if (highPDen != 0){
 +  highPRatio = (highP->rtime * highP->cfs_priority) / highPDen;
 +}
 +else {highPRatio = 1;}
 +
-+int p1Den = (2 * p1->rtime + p1->stime);
++int p1Den = p1->retime + p1->rtime + p1->stime;
 +if (p1Den != 0){
 +  p1Ratio = (p1->rtime * p1->cfs_priority) / p1Den;
 +}
@@ -957,10 +960,10 @@ index 4fd33c8..83c5f36 100644
  }
 diff --git a/sanity.c b/sanity.c
 new file mode 100644
-index 0000000..e3590c1
+index 0000000..5eb1cc0
 --- /dev/null
 +++ b/sanity.c
-@@ -0,0 +1,63 @@
+@@ -0,0 +1,64 @@
 +#include "types.h"
 +#include "stat.h"
 +#include "user.h"
@@ -996,13 +999,14 @@ index 0000000..e3590c1
 +            set_cfs_priority(1);
 +            break;
 +      }
-+      for (long long i = 0; i < 2; i += 1 ){
++      for (long long i = 0; i < 100; i += 1 ){
 +         //x =  x + 3.14 * 89.64;  // useless calculations to consume CPU time
 +         int  t1 = 0, t2 = 1, nextTerm;
-+        long long z, n = 100;
++        long long z, n = 10000;
 +        
 +        for (z = 1; z <= n; ++z) {
-+            printf(1,"process: %d\n", k);
++           // printf(0,"");
++           // printf(1,"");
 +            nextTerm = t1 + t2;
 +            t1 = t2;
 +            t2 = nextTerm;
