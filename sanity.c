@@ -39,8 +39,8 @@ int main1(int argc, char *argv[]) {
         long long z, n = 10000;
         
         for (z = 1; z <= n; ++z) {
-            printf(0,"");
-            printf(1,"");
+            //printf(0,"");
+            //printf(1,"");
             nextTerm = t1 + t2;
             t1 = t2;
             t2 = nextTerm;
