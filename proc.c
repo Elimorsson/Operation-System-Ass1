@@ -362,13 +362,13 @@ wait(int *status)
 struct proc* calculateRatio(struct proc* highP, struct proc* p1){
 float highPRatio,p1Ratio;
 
-int highPDen = (2 * highP->rtime) + highP->stime;
+int highPDen = highP->retime + highP->rtime + highP->stime;
 if (highPDen != 0){
   highPRatio = (highP->rtime * highP->cfs_priority) / highPDen;
 }
 else {highPRatio = 1;}
 
-int p1Den = (2 * p1->rtime + p1->stime);
+int p1Den = p1->retime + p1->rtime + p1->stime;
 if (p1Den != 0){
   p1Ratio = (p1->rtime * p1->cfs_priority) / p1Den;
 }

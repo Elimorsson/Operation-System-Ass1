@@ -33,13 +33,14 @@ int main1(int argc, char *argv[]) {
             set_cfs_priority(1);
             break;
       }
-      for (long long i = 0; i < 2; i += 1 ){
+      for (long long i = 0; i < 100; i += 1 ){
          //x =  x + 3.14 * 89.64;  // useless calculations to consume CPU time
          int  t1 = 0, t2 = 1, nextTerm;
-        long long z, n = 100;
+        long long z, n = 10000;
         
         for (z = 1; z <= n; ++z) {
-            printf(1,"process: %d\n", k);
+           // printf(0,"");
+           // printf(1,"");
             nextTerm = t1 + t2;
             t1 = t2;
             t2 = nextTerm;
